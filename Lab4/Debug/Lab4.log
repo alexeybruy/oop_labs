@@ -1,5 +1,0 @@
-﻿  FileManager.cpp
-C:\Users\a2.bruy\source\repos\OOP\Lab4\FileManager.cpp(14,13): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-C:\Users\a2.bruy\source\repos\OOP\Lab4\FileManager.cpp(34,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-C:\Users\a2.bruy\source\repos\OOP\Lab4\FileManager.cpp(67,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
-  Lab4.vcxproj -> C:\Users\a2.bruy\source\repos\OOP\Debug\Lab4.exe
