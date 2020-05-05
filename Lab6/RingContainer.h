@@ -11,5 +11,6 @@ public:
 
 	void Add(Toy* item);
 	void Remove(Toy* item);
+	void MoveUp(Toy* item);
 };
 

@@ -16,93 +16,124 @@ using namespace std;
 
 
 void Position(RingContainer& container) {
-	Toy* second = new Toy();
-	second->Name = "asd 2";
-	Toy* third = new Toy();
-	third->Name = "asd 3";
-
 	ProcessingCenter<Toy>* processingCenter = new ProcessingCenter<Toy>();
 
-	vector<Toy>* sequence = new vector<Toy>({ *second, *second, *third });
-
-	function<bool(Toy, Toy)> positionPredicate = [](Toy first, Toy second) {
-		return (first.Name == second.Name);
-	};
-
-	auto result = processingCenter->Pos(&container, sequence, positionPredicate);
-
 	cout << endl << "Position: " << endl;
+
+	int itemsCount = 0;
+
+	cin >> itemsCount;
+
+	vector<Toy>* sequence = new vector<Toy>();
+
+	for (int i = 0; i < itemsCount; i++) {
+		Toy* item = new Toy();
+		item->FillWithConsole();
+		sequence->push_back(*item);
+	}
+
+	auto result = processingCenter->Pos(&container, sequence, [](Toy first, Toy second) {
+		return (first.Name == second.Name);
+		});
+
+	cout << endl;
 
 	for (int i = 0; i < sequence->size(); i++) {
 		cout << (*sequence)[i].Name << endl;
 	}
 
-	cout << "Result: " << result <<endl;
+	cout << endl << "Result: " << result << endl;
 
 }
 
 void Distinct(RingContainer& container) {
-	ProcessingCenter<Toy> * processingCenter = new ProcessingCenter<Toy>();
-
-	function<bool(Toy, Toy)> distinctPredicate = [](Toy first, Toy second) {
-		return (first.Name == second.Name);
-	};
-
-	processingCenter->Distinct(&container, distinctPredicate);
+	ProcessingCenter<Toy>* processingCenter = new ProcessingCenter<Toy>();
 
 	cout << endl << "Distinct: " << endl;
+
+	processingCenter->Distinct(&container, [](Toy first, Toy second) {
+		return (first.Name == second.Name);
+		});
+
 
 	auto distinctInterator = container.inputBegin();
 	auto startInterator = container.inputBegin();
 
 	do {
-		cout << (*distinctInterator).Name   << endl;
+		cout << (*distinctInterator).Name << endl;
 		distinctInterator++;
 	} while (distinctInterator != startInterator);
 }
 
-int main()
-{
-	Toy* first = new Toy();
-	first->Name = "asd";
-	Toy* second = new Toy();
-	second->Name = "asd 2";
-	Toy* third = new Toy();
-	third->Name = "asd 3";
-	Toy* fourth = new Toy();
-	fourth->Name = "asd 4";
+void Order(RingContainer& container) {
+	ProcessingCenter<Toy>* processingCenter = new ProcessingCenter<Toy>();
+	cout << endl << "Order: " << endl;
 
-	Toy* first2 = new Toy();
-	first2->Name = "asd";
-	Toy* second2 = new Toy();
-	second2->Name = "asd 2";
-	Toy* second3 = new Toy();
-	second3->Name = "asd 2";
-	Toy* third2 = new Toy();
-	third2->Name = "asd 3";
+	processingCenter->Order(&container, [](Toy first, Toy second) {
+		if (first.Name.compare(second.Name) > 0) {
+			return true;
+		}
 
-	RingContainer container(first, second);
-	container.Add(third);
-	container.Add(fourth);
-	container.Add(second2);
-	container.Add(second3);
-	container.Add(third2);
-	container.Add(first2);
+		return false;
+		});
 
-	cout <<  "All: " << endl;
-
-
-	auto iterator = container.inputBegin();
+	auto orderIterator = container.inputBegin();
 	auto startInterator = container.inputBegin();
+
+	do {
+		cout << (*orderIterator).Name << endl;
+		orderIterator++;
+	} while (orderIterator != startInterator);
+}
+
+RingContainer* Initialize() {
+	Toy* first = new Toy();
+	first->Name = "asd1";
+	Toy* second = new Toy();
+	second->Name = "asd5";
+
+	Toy* third = new Toy();
+	third->Name = "asd3";
+	Toy* fourth = new Toy();
+	fourth->Name = "asd7";
+
+	first->FillWithConsole();
+	second->FillWithConsole();
+
+	RingContainer* container = new RingContainer(first, second);
+
+	//container->Add(third);
+	//container->Add(fourth);
+	int itemsCount;
+	cout << endl << "How many items to add?" << endl;
+	cin >> itemsCount;
+
+	for (int i = 0; i < itemsCount; i++) {
+		Toy* item = new Toy();
+		item->FillWithConsole();
+		container->Add(item);
+	}
+
+	cout << endl << "All: " << endl;
+
+
+	auto iterator = container->inputBegin();
+	auto startInterator = container->inputBegin();
 
 	do {
 		cout << (*iterator).Name << endl;
 		iterator++;
 	} while (iterator != startInterator);
 
+	return container;
+}
+int main()
+{
+	RingContainer container = *Initialize();
 
-	Position(container);
-	Distinct(container);
+	//Position(container);
+	//Distinct(container);
+	Order(container);
 
 	system("pause");
 }

@@ -26,12 +26,25 @@ void RingContainer::Add(Toy* item) {
 void RingContainer::Remove(Toy* item) {
 	Toy* currentPoiner = item;
 
-
 	for (; currentPoiner->Next != item; currentPoiner = currentPoiner->Next)
 	{
 	}
 
 	currentPoiner->Next = item->Next;
+}
 
-	//delete item;
+void RingContainer::MoveUp(Toy* item) {
+	Toy* itemPointer = item;
+
+	for (; itemPointer->Next != item; itemPointer = itemPointer->Next)
+	{
+	}
+
+	auto next = item->Next;
+
+	item->Next = item->Next->Next;
+
+	next->Next = item;
+
+	itemPointer->Next = next;
 }

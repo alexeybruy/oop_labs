@@ -2,7 +2,18 @@
 
 template<class T>
 void ProcessingCenter<T>::Order(RingContainer* container, function<bool(T, T)> predicate) {
-	return;
+	InputIterator i = container->inputBegin();
+	InputIterator startIterator = container->inputBegin();
+
+	for (; (*i).Next != &(*startIterator); i++) {
+		InputIterator j = container->inputBegin();
+
+		for (; (*j).Next != &(*startIterator); j++) {
+			if (predicate(*j,*(*j).Next)) {
+				container->MoveUp(&*j);
+			}
+		}
+	}
 }
 
 template<class T>
@@ -46,7 +57,7 @@ void ProcessingCenter<T>::Distinct(RingContainer* container, function<bool(T, T)
 
 		bool flag = true;
 
-		do{
+		do {
 			if (iterator != local && predicate(*iterator, *local)) {
 				container->Remove(&*local);
 			}
