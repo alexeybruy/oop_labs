@@ -88,22 +88,13 @@ void Order(RingContainer& container) {
 
 RingContainer* Initialize() {
 	Toy* first = new Toy();
-	first->Name = "asd1";
 	Toy* second = new Toy();
-	second->Name = "asd5";
-
-	Toy* third = new Toy();
-	third->Name = "asd3";
-	Toy* fourth = new Toy();
-	fourth->Name = "asd7";
 
 	first->FillWithConsole();
 	second->FillWithConsole();
 
 	RingContainer* container = new RingContainer(first, second);
 
-	//container->Add(third);
-	//container->Add(fourth);
 	int itemsCount;
 	cout << endl << "How many items to add?" << endl;
 	cin >> itemsCount;
@@ -131,8 +122,8 @@ int main()
 {
 	RingContainer container = *Initialize();
 
-	//Position(container);
-	//Distinct(container);
+	Position(container);
+	Distinct(container);
 	Order(container);
 
 	system("pause");
