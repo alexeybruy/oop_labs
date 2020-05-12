@@ -54,7 +54,7 @@ int ProcessingCenter<T>::Pos(deque<T>* container, deque<T>* sequence, function<b
 		}
 
 		if (flag == true) {
-			return position + 1;
+			return position;
 		}
 
 		position++;

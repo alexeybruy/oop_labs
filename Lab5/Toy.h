@@ -16,4 +16,6 @@ public:
 	Toy();
 
 	void Print();
+	void FillWithConsole();
+
 };

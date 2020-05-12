@@ -9,13 +9,14 @@
 #include "GetNewFromConsole.h"
 #include "WriteAll.h"
 #include "GetAll.h"
+#include <functional>
 
 using namespace std;
 
 
-void InsertSort(Toy* arr, int n) {
+void InsertSort(Toy* arr, int n, function<bool(Toy, Toy)> predicate) {
 	for (int i = 1; i < n; i++) {
-		for (int j = i; j > 0 && arr[j - 1].Price > arr[j].Price; j--) {
+		for (int j = i; j > 0 && predicate(arr[j - 1], arr[j]); j--) {
 			Toy tmp = arr[j - 1];
 			arr[j - 1] = arr[j];
 			arr[j] = tmp;
@@ -64,15 +65,33 @@ int main()
 		}
 
 		if (command == "sort") {
-			int toysCount = 0;
+				string field;
+				cin >> field;
 
-			Toy* allToys = GetAll(toysCount);
 
-			InsertSort(allToys, toysCount);
+				int toysCount = 0;
 
-			for (int i = 0; i < toysCount; i++) {
-				allToys[i].Print();
-			}
+				Toy* allToys = GetAll(toysCount);
+
+				if (field == "name") {
+					InsertSort(allToys, toysCount, [](Toy first, Toy second) { return first.Name > second.Name;  });
+				}
+
+				if (field == "price") {
+					InsertSort(allToys, toysCount, [](Toy first, Toy second) { return first.Price > second.Price;  });
+				}
+
+				if (field == "age") {
+					InsertSort(allToys, toysCount, [](Toy first, Toy second) { return first.MinimalAge > second.MinimalAge;  });
+				}
+
+				if (field == "count") {
+					InsertSort(allToys, toysCount, [](Toy first, Toy second) { return first.Count > second.Count;  });
+				}
+
+				for (int i = 0; i < toysCount; i++) {
+					allToys[i].Print();
+				}	
 		}
 
 		if (command == "task") {
@@ -90,10 +109,10 @@ int main()
 
 					Toy* allToys = GetAll(toysCount);
 
-					InsertSort(allToys, toysCount);
+					InsertSort(allToys, toysCount, [](Toy first, Toy second) { return first.Name > second.Name;  });
 
 					for (int i = 0; i < toysCount; i++) {
-						if (allToys[i].MinimalAge > age) {
+						if (allToys[i].MinimalAge >= age) {
 							allToys[i].Print();
 						}
 					}

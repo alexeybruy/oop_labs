@@ -10,21 +10,25 @@ using namespace std;
 int main()
 {
 	Toy* first = new Toy();
-	first->Name = "asd";
+	first->FillWithConsole();
 
 	Toy *second = new Toy();
-	second->Name = "asd 2";
+	second->FillWithConsole();
 
-	Toy* third = new Toy();
-	third->Name = "asd 3";
+	RingContainer container(first, second);
 
-	Toy* fourth = new Toy();
-	fourth->Name = "asd 4";
+	cout << "How many items to add?" << endl;
 
-	RingContainer  container(first, second);
+	int count = 0;
 
-	container.Add(third);
-	container.Add(fourth);
+	cin >> count;
+
+	for (int i = 0; i < count; i++) {
+		Toy* item = new Toy();
+		item->FillWithConsole();
+
+		container.Add(item);
+	}
 
 	cout << "inputIterator: " << endl;
 
