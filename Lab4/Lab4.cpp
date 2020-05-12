@@ -8,6 +8,17 @@
 
 using namespace std;
 
+
+string convertToString(char* a, int size)
+{
+	int i;
+	string s = "";
+	for (i = 0; i < size; i++) {
+		s = s + a[i];
+	}
+	return s;
+}
+
 int main()
 {	
 	FileManager manager;
@@ -32,13 +43,46 @@ int main()
 			manager.Print();
 		}
 
-		if (command == "up") {
-			manager.OrderUp();
+		if (command == "up" || command == "down") {
+			string field;
+
+			cin >> field;
+
+			function<bool(Toy, Toy)> predicate;
+
+			if (field == "name") {
+				predicate = [](Toy first, Toy second) {
+					int first_size = sizeof(first) / sizeof(char);
+					int second_size = sizeof(second) / sizeof(char);
+
+					string firstString = convertToString(first.Name, first_size);
+					string secondString = convertToString(second.Name, second_size);
+
+					return firstString < secondString;
+				};
+			}
+
+			if (field == "price") {
+				predicate = [](Toy first, Toy second) { return first.Price > second.Price;  };
+			}
+
+			if (field == "age") {
+				predicate = [](Toy first, Toy second) { return first.MinimalAge > second.MinimalAge;  };
+			}
+
+			if (field == "count") {
+				predicate = [](Toy first, Toy second) { return first.Count > second.Count;  };
+			}
+
+			if (command == "up") {
+				manager.OrderUp(predicate);
+			}
+
+			if (command == "down") {
+				manager.OrderDown(predicate);
+			}
 		}
 
-		if (command == "down") {
-			manager.OrderDown();
-		}
 	}
 }
 

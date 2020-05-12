@@ -22,15 +22,15 @@ void FileManager::Add(Toy* toy) {
 	file.close();
 }
 
-void FileManager::OrderDown() {
-	this->Order(false);
+void FileManager::OrderDown(function<bool(Toy, Toy)> predicate) {
+	this->Order(false, predicate);
 }
 
-void FileManager::OrderUp() {
-	this->Order(true);
+void FileManager::OrderUp(function<bool(Toy, Toy)> predicate) {
+	this->Order(true, predicate);
 }
 
-void FileManager::Order(bool up) {
+void FileManager::Order(bool up, function<bool(Toy, Toy)> predicate) {
 	int fileLength = filesize("data.txt");
 	int n = fileLength / sizeof(Toy);
 
@@ -46,11 +46,11 @@ void FileManager::Order(bool up) {
 			file.seekg((j) * sizeof(Toy));
 			file.read((char*)&right, sizeof(Toy));
 
-			if (up == false && left.Price < right.Price) {
+			if (up == false && !predicate(left,right)) {
 				break;
 			}
 
-			if (up == true && left.Price > right.Price) {
+			if (up == true && predicate(left, right)) {
 				break;
 			}
 
