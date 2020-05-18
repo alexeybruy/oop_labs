@@ -52,8 +52,8 @@ int main()
 
 			if (field == "name") {
 				predicate = [](Toy first, Toy second) {
-					int first_size = sizeof(first) / sizeof(char);
-					int second_size = sizeof(second) / sizeof(char);
+					int first_size = sizeof(first.Name) / sizeof(char);
+					int second_size = sizeof(second.Name) / sizeof(char);
 
 					string firstString = convertToString(first.Name, first_size);
 					string secondString = convertToString(second.Name, second_size);

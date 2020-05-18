@@ -10,8 +10,6 @@ Toy::Toy() {
 void Toy::Print() {
     cout << "Name: " << this->Name << endl;
 
-    return;
-
     cout << "Count: " << this->Count << endl;
     cout << "Price: " << this->Price << endl;
     cout << "MinimalAge: " << this->MinimalAge << endl << endl;
@@ -24,8 +22,6 @@ void Toy::FillWithConsole() {
     cout << "Name" << endl;
 
     cin >> toy.Name;
-
-    return;
 
     cout << "Count" << endl;
 

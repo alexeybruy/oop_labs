@@ -22,7 +22,6 @@ void Toy::FillWithConsole() {
 
     cin >> toy.Name;
 
-    return;
 
     cout << "Count" << endl;
 

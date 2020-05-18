@@ -60,7 +60,7 @@ void Distinct(RingContainer& container) {
 	auto startInterator = container.inputBegin();
 
 	do {
-		cout << (*distinctInterator).Name << endl;
+		(*distinctInterator).Print();
 		distinctInterator++;
 	} while (distinctInterator != startInterator);
 }
@@ -69,19 +69,35 @@ void Order(RingContainer& container) {
 	ProcessingCenter<Toy>* processingCenter = new ProcessingCenter<Toy>();
 	cout << endl << "Order: " << endl;
 
-	processingCenter->Order(&container, [](Toy first, Toy second) {
-		if (first.Name.compare(second.Name) > 0) {
-			return true;
-		}
+	string field;
 
-		return false;
-		});
+	cin >> field;
+
+	function<bool(Toy, Toy)> predicate;
+
+	if (field == "name") {
+		predicate = [](Toy first, Toy second) { return first.Name.compare(second.Name) > 0; };
+	}
+
+	if (field == "price") {
+		predicate = [](Toy first, Toy second) { return first.Price > second.Price;  };
+	}
+
+	if (field == "age") {
+		predicate = [](Toy first, Toy second) { return first.MinimalAge > second.MinimalAge;  };
+	}
+
+	if (field == "count") {
+		predicate = [](Toy first, Toy second) { return first.Count > second.Count;  };
+	}
+	
+	processingCenter->Order(&container, predicate);
 
 	auto orderIterator = container.inputBegin();
 	auto startInterator = container.inputBegin();
 
 	do {
-		cout << (*orderIterator).Name << endl;
+		(*orderIterator).Print();
 		orderIterator++;
 	} while (orderIterator != startInterator);
 }
@@ -112,7 +128,7 @@ RingContainer* Initialize() {
 	auto startInterator = container->inputBegin();
 
 	do {
-		cout << (*iterator).Name << endl;
+		(*iterator).Print();
 		iterator++;
 	} while (iterator != startInterator);
 
@@ -122,11 +138,29 @@ int main()
 {
 	RingContainer container = *Initialize();
 
-	Position(container);
-	Distinct(container);
-	Order(container);
+	while (true) {
 
-	system("pause");
+		string command;
+
+		cout << endl << "command:" << endl;
+		cin >> command;
+		cout << endl;
+
+		if (command == "position") {
+			Position(container);
+		}
+
+		if (command == "distinct") {
+			Distinct(container);
+		}
+
+		if (command == "order") {
+			Order(container);
+		}
+
+		cout << endl << endl;
+	}
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

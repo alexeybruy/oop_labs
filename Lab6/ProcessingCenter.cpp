@@ -5,6 +5,7 @@ void ProcessingCenter<T>::Order(RingContainer* container, function<bool(T, T)> p
 	InputIterator i = container->inputBegin();
 	InputIterator startIterator = container->inputBegin();
 
+
 	for (; (*i).Next != &(*startIterator); i++) {
 		InputIterator j = container->inputBegin();
 

@@ -38,9 +38,30 @@ void Order(deque<Toy>* container) {
 
 	ProcessingCenter<Toy>& processingCenter = *new ProcessingCenter<Toy>();
 
-	processingCenter.Order(container, [](Toy first, Toy second) {
-		return (first).Name < (second).Name;
-		});
+
+	function<bool(Toy, Toy)> predicate;
+
+	string field;
+
+	cin >> field;
+	
+	if (field == "name") {
+		predicate = [](Toy first, Toy second) { return first.Name.compare(second.Name) < 0; };
+	}
+
+	if (field == "price") {
+		predicate = [](Toy first, Toy second) { return first.Price < second.Price;  };
+	}
+
+	if (field == "age") {
+		predicate = [](Toy first, Toy second) { return first.MinimalAge < second.MinimalAge;  };
+	}
+
+	if (field == "count") {
+		predicate = [](Toy first, Toy second) { return first.Count < second.Count;  };
+	}
+
+	processingCenter.Order(container, predicate);
 
 	auto iterator = container->begin();
 
@@ -110,11 +131,29 @@ int main()
 {
 	auto container = Initialize();
 
-	Position(container);
-	Order(container);
-	Distinct(container);
 
-	system("pause");
+	while (true) {
+
+		string command;
+
+		cout << endl << "command:" << endl;
+		cin >> command;
+		cout << endl;
+
+		if (command == "position") {
+			Position(container);
+		}
+
+		if (command == "distinct") {
+			Distinct(container);
+		}
+
+		if (command == "order") {
+			Order(container);
+		}
+
+		cout << endl << endl;
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

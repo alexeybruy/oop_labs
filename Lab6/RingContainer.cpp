@@ -34,17 +34,15 @@ void RingContainer::Remove(Toy* item) {
 }
 
 void RingContainer::MoveUp(Toy* item) {
-	Toy* itemPointer = item;
+	Toy* prevPointer = item;
 
-	for (; itemPointer->Next != item; itemPointer = itemPointer->Next)
+	Toy* nextPointer = item->Next;
+
+	for (; prevPointer->Next != item; prevPointer = prevPointer->Next)
 	{
 	}
 
-	auto next = item->Next;
-
-	item->Next = item->Next->Next;
-
-	next->Next = item;
-
-	itemPointer->Next = next;
+	item->Next = nextPointer->Next;
+	nextPointer->Next = item;
+	prevPointer->Next = nextPointer;
 }
