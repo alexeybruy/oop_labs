@@ -35,8 +35,7 @@ int main()
 	auto inputIterator = container.inputBegin();
 
 	for (int i = 0; i < 10; i++) {
-		cout << inputIterator.current->Name << endl;
-
+		inputIterator.current->Print();
 		inputIterator++;
 	}
 
@@ -45,8 +44,7 @@ int main()
 	auto reverseIterator = container.reverseBegin();
 
 	for (int i = 0; i < 10; i++) {
-		cout << reverseIterator.current->Name << endl;
-
+		reverseIterator.current->Print();
 		reverseIterator++;
 	}
 
